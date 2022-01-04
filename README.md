@@ -1,1 +1,2 @@
 # Splitwise-Expense-Sharing-Application
+An expense sharing application is used to split and minimise the expenses amongst a group of people. It keeps a balance between people as in who owes how much money to whom. It can be used to implement on our everyday lives to share expenses with friends, family, or colleagues, to minimise the transactions and simplify the amount one needs to pay. It does not change the total amount that anyone owes, but instead makes it easier to pay people back by minimizing the total number of payments/transactions one needs to make.
