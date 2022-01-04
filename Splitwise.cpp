@@ -1,0 +1,85 @@
+#include<iostream>
+#include<set>
+#include<map>
+using namespace std;
+
+class compare
+{
+public:
+    bool operator()(pair<string,int> p1, pair<string,int> p2)
+    {
+        return p1.second < p2.second;
+    }
+};
+
+int main()
+{
+    int transactions,friends;
+    string x,y;
+    int amount;
+
+    cout<<"Enter the Number of transactions to be placed: ";
+    cin>>transactions;
+    cout<<"Enter the Number of friends: ";
+    cin>>friends;
+    cout<<"Transactions:"<<endl;
+
+    map<string,int> net;
+
+    while(transactions--)
+    {
+        cin>>x>>y>>amount;
+        if(net.count(x)==0)
+        {
+            net[x] = 0;
+        }
+        if(net.count(y)==0)
+        {
+            net[y] = 0;
+        }
+        net[x] -= amount;
+        net[y] += amount;
+    }
+
+    multiset<pair<string,int>, compare> m;
+
+    for(auto p:net)
+    {
+        string person = p.first;
+        int amount = p.second;
+
+        if(net[person]!=0)
+        {
+            m.insert(make_pair(person,amount));
+        }
+    }
+    int cnt = 0;
+    while(!m.empty())
+    {
+        auto low = m.begin();
+        auto high = prev(m.end());
+        int debit = low->second;
+        string debit_person = low->first;
+        int credit = high->second;
+        string credit_person = high->first;
+        m.erase(low);
+        m.erase(high);
+        int settled_amount = min(-debit,credit);
+        debit += settled_amount;
+        credit -= settled_amount;
+        cout<<debit_person<<" will pay "<<settled_amount<<" to "<<credit_person<<endl;
+        if(debit!=0)
+        {
+            m.insert(make_pair(debit_person,debit));
+        }
+        if(credit!=0)
+        {
+            m.insert(make_pair(credit_person,credit));
+        }
+        cnt += 1;
+    }
+    cout<<"Total Transactions taken place: ";
+    cout<<cnt<<endl;
+
+return 0;
+}
